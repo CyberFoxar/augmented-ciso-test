@@ -7,7 +7,7 @@ let emailValue = ref('user@example.com');
 
 const authStore = useAuthStore();
 
-console.log(authStore.authToken)
+console.log("token:", authStore.authToken)
 
 /**
  * Submit form to try to register a user.
@@ -51,10 +51,12 @@ function submit(onSuccess, onFailure) {
 </script>
 
 <template>
+    <div>
+        Authentication Component
+    </div>
     <form>
         <input type="email" placeholder="email@example.com" v-model="emailValue">
         <input type="text" placeholder="Player Name" v-model="nameValue">
         <button type="submit" @click.prevent="submit()">Register</button>
     </form>
-    <p>{{`email is ${emailValue} and name is ${nameValue}`}}</p>
 </template>

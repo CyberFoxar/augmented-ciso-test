@@ -1,7 +1,12 @@
 # augmented-ciso
 
-This template should help get you started developing with Vue 3 in Vite.
+Repository for [augmentedCISO](https://www.augmentedciso.com/)'s [coding Game test](https://tt.augmentedciso.com/static/readme.html).
 
+The [request Test](./requestTests/) folder contains some test HTTP requests for use with VSCode's [REST Client Extension](https://marketplace.visualstudio.com/items?itemName=humao.rest-client).
+
+
+# Made with Vue Scaffolding tool
+Original Readme follows
 ## Recommended IDE Setup
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
