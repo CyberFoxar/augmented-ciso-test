@@ -1,0 +1,21 @@
+GET https://tt.augmentedciso.com/version HTTP/1.1
+
+###
+
+// With name = "string" and email = "user@example.com"
+ {
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJleHAiOjE2NjQ0NjExNTR9.zvZuK8irBpQpOkEe0GLoZ74hcOsoxsG4OPz_lhRj8rU"
+}
+
+###
+GET https://tt.augmentedciso.com/risk HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJleHAiOjE2NjQ0NjExNTR9.zvZuK8irBpQpOkEe0GLoZ74hcOsoxsG4OPz_lhRj8rU
+
+###
+POST https://tt.augmentedciso.com/register HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "string",
+  "email": "user@example.com"
+}
