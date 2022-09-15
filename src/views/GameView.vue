@@ -83,46 +83,56 @@ function submit() {
 </script>
 
 <template>
+    <div id="host">
+        <h1>Cyber-Defense Game</h1>
 
-    <h1>Cyber-Defense Game</h1>
-
-    <div class="gameinfo">
-        <p>Budget: {{currentBudget}}/{{game.budget}}K€</p>
-        <p>Selected measures: {{state.selectedMeasures.length}}/{{game.maxMeasures}}</p>
-        <button style="max-width: fit-content;" @click.prevent="submit" type="submit">Submit selected measures</button>
-        <span>Score: {{state.lastGameResult.score}}</span>
-    </div>
-
-
-    <div class="column-container">
-        <div class="column">
-            Available Measures Column
-            <MeasureComponent
-                              v-for="(measure, index) in state.measures"
-                              :measure="measure"
-                              :index="index"
-                              :key="measure.identifier"
-                              :currentBudget="currentBudget"
-                              v-model:model-selected-measures="state.selectedMeasures">
-            </MeasureComponent>
+        <div class="gameinfo">
+            <p>Your goal is to select up to {{game.maxMeasures}} measures from the list on the left while staying within budget to cover as many risks as possible. 
+            The score indicator is a global number helping know how well you are doing.</p>
+            <p>Budget: {{currentBudget}}/{{game.budget}}K€</p>
+            <p>Selected measures: {{state.selectedMeasures.length}}/{{game.maxMeasures}}</p>
+            <button style="max-width: fit-content;" @click.prevent="submit" type="submit">Submit selected measures</button>
+            <span>Score: {{state.lastGameResult.score}}</span>
         </div>
 
-        <div class="column">
-            Risk Column
-            <RiskComponent
-                           v-for="(risk, index) in state.risks"
-                           :risk="risk"
-                           :index="index"
-                           :key="risk.identifier"
-                           :game-result="state.lastGameResult">
-            </RiskComponent>
+
+        <div class="column-container">
+            <div class="column">
+                Available Measures Column
+                <MeasureComponent
+                                  v-for="(measure, index) in state.measures"
+                                  :measure="measure"
+                                  :index="index"
+                                  :key="measure.identifier"
+                                  :currentBudget="currentBudget"
+                                  v-model:model-selected-measures="state.selectedMeasures">
+                </MeasureComponent>
+            </div>
+
+            <div class="column">
+                Risk Column
+                <RiskComponent
+                               v-for="(risk, index) in state.risks"
+                               :risk="risk"
+                               :index="index"
+                               :key="risk.identifier"
+                               :game-result="state.lastGameResult">
+                </RiskComponent>
+            </div>
         </div>
     </div>
-
-
 </template>
 
 <style scoped>
+
+#host {
+    /* This should be adapted for smaller screens too */
+    max-width: 80vw;
+}
+.gameinfo {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
 .column-container {
     display: flex;
     flex-direction: row;
@@ -133,7 +143,7 @@ function submit() {
     display: flex;
     flex-direction: column;
     padding: 0.5em;
-    height: 600px;
+    height: 75vh;
     min-height: 300px;
     resize: vertical;
 }

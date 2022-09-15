@@ -19,7 +19,7 @@ const coverage = computed(() => {
         <p>identifier: {{risk.identifier}}</p>
         <p>name: {{risk.name}}</p>
         <p>severity: {{risk.severity}}</p>
-        <p>coverage: {{coverage}}%</p>
+        <p>coverage: {{coverage ? coverage : 0}}%</p>
     </div>
 </template>
 

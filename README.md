@@ -11,6 +11,8 @@ And then `yarn dev` for running dev server using vite.
 
 A debug mode is available, and uses some mocked values. To access it, you need to have an entry in local storage `debug` with value `true`.
 
+Bear in mind, this website is _NOT_ mobile-friendly.
+
 ## TODO:
 - Add UI for game result risks
 - Add DB (iDB ?) to save past tries
