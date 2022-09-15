@@ -4,6 +4,23 @@ Repository for [augmentedCISO](https://www.augmentedciso.com/)'s [coding Game te
 
 The [request Test](./requestTests/) folder contains some test HTTP requests for use with VSCode's [REST Client Extension](https://marketplace.visualstudio.com/items?itemName=humao.rest-client).
 
+## TODO:
+Add UI for game result risks
+Add UI to view past tries
+Add DB (iDB ?) to save past tries
+Améliorer lisibilité WCAG (https://webaim.org/resources/contrastchecker/) -- Couleur de texte qui constraste mieux
+
+
+Heuristic / Algorithm seem easy enough:
+score = moyenne(risk.coverage)... pondéré par sa séverité, j'imagine
+
+chaque measure a un coverage particulier pour un risque particulier, les coverage s'additionnent (a priori)
+(52*4 + 35*3 + 51*2 + 86*1) / (4+3+2+1)
+208 + 105 + 102 + 86 / 10 = 50.1
+
+Resultat attendu: 50.1
+
+Y'a 15 measures, en 15 appels je dois pouvoir tout modéliser, j'imagine.
 
 # Made with Vue Scaffolding tool
 Original Readme follows

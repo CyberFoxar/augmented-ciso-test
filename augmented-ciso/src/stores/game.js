@@ -8,7 +8,8 @@ export const useGameStore = defineStore('game-store', {
             knownRisks: [],
             /** @type {{Measure}[]} */
             availableMeasures: [],
-            budget: 100
+            budget: 100,
+            maxMeasures: 3
         }
     },
     actions: {
@@ -83,6 +84,15 @@ export class Measure {
     name = ''
     identifier = ''
     cost = 0
+}
+
+export class GameResult {
+  score = 0
+  risks = [{
+    identifier: '',
+    coverage: 0,
+    severity: 0
+  }]
 }
 
 const mockRisks = [

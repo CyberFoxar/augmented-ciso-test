@@ -1,6 +1,10 @@
 <script setup>
-import { useGameStore, Risk, Measure } from '../stores/game';
+import { useGameStore, Risk, Measure, GameResult } from '../stores/game';
+import { useAuthStore } from '../stores/userAuth';
 import { reactive } from "vue"
+import RiskComponent from '../components/RiskComponent.vue';
+import MeasureComponent from '../components/MeasureComponent.vue';
+import { computed } from '@vue/reactivity';
 
 
 const game = useGameStore()
@@ -11,12 +15,29 @@ const risks = [];
 const measures = [];
 /** @type {Measure[]} */
 const selectedMeasures = [];
+/** @Type {GameResult} */
+const starterGameResult = {
+    score: 0,
+    risks: [{
+        identifier: '',
+        coverage: 0,
+        severity: 0
+    }]
+}
+
 
 const state = reactive({
     risks: risks,
     measures: measures,
-    selectedMeasures: selectedMeasures
+    selectedMeasures: selectedMeasures,
+    lastGameResult: starterGameResult,
 })
+
+const currentCart = computed(() => {
+    return state.selectedMeasures.reduce((prev, curr, index) => { return prev + curr.cost }, 0)
+})
+
+const currentBudget = computed(() => { return game.budget - currentCart.value })
 
 game.fetchRisks().then((o) => {
     state.risks = o;
@@ -27,7 +48,31 @@ game.fetchMeasures().then((o) => {
 })
 
 function submit() {
+    const selectedMeasuresIdentifiers = state.selectedMeasures.map((m) => m.identifier);
+    const auth = useAuthStore()
+    if (!auth.authToken) {
+        throw new Error("user not authenticated")
+    }
 
+    fetch(
+        "https://tt.augmentedciso.com/play",
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'accept': 'application/json',
+                'Authorization': `Bearer ${auth.authToken}`
+            },
+            body: JSON.stringify({
+                measures: selectedMeasuresIdentifiers
+            })
+        }
+    ).then(async (response) => {
+        /** @type {GameResult} */
+        const body = await response.json();
+        console.log(body)
+        state.lastGameResult = body;
+    })
 }
 
 /*
@@ -42,26 +87,36 @@ function submit() {
 <template>
 
     Hello from game
-    <p>Budget: {{game.budget}}K€</p>
-    <button @click.prevent="submit" type="submit">Submit selected measures</button>
+
+    <p>Budget: {{currentBudget}}/{{game.budget}}K€</p>
+    <p>Selected measures: {{state.selectedMeasures.length}}/{{game.maxMeasures}}</p>
+    <button style="max-width: fit-content;" @click.prevent="submit" type="submit">Submit selected measures</button>
+    <span>Score: {{state.lastGameResult.score}}</span>
 
     <div class="column-container">
         <div class="column">
             Available Measures Column
-            <div v-for="measure in state.measures" :key="measure.identifier" class="measure-entry entry">
-                <p>identifier: {{measure.identifier}}</p>
-                <p>name: {{measure.name}}</p>
-                <p>cost: {{measure.cost}}</p>
-            </div>
+            <MeasureComponent
+                              v-for="(measure, index) in state.measures"
+                              :measure="measure"
+                              :index="index"
+                              :key="measure.identifier"
+                              :currentBudget="currentBudget"
+                              v-model:model-selected-measures="state.selectedMeasures"
+                              class="entry">
+            </MeasureComponent>
         </div>
 
         <div class="column">
             Risk Column
-            <div v-for="risk in state.risks" :key="risk.identifier" class="risk-entry entry">
-                <p>identifier: {{risk.identifier}}</p>
-                <p>name: {{risk.name}}</p>
-                <p>severity: {{risk.severity}}</p>
-            </div>
+            <RiskComponent
+                           v-for="(risk, index) in state.risks"
+                           :risk="risk"
+                           :index="index"
+                           :key="risk.identifier"
+                           :game-result="state.lastGameResult"
+                           class="entry">
+            </RiskComponent>
         </div>
     </div>
 
@@ -75,12 +130,12 @@ function submit() {
 }
 
 .column {
+    overflow: auto;
     display: flex;
     flex-direction: column;
     padding: 0.5em;
-}
-.entry {
-    padding-left: 0.2em;
-    padding-top: 0.3em;
+    height: 600px;
+    min-height: 300px;
+    resize: vertical;
 }
 </style>
