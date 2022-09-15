@@ -7,8 +7,6 @@ let emailValue = ref('user@example.com');
 
 const authStore = useAuthStore();
 
-console.log("token:", authStore.authToken)
-
 /**
  * Submit form to try to register a user.
  * @param {() => any} onSuccess called when user properly authenticated

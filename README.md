@@ -9,11 +9,15 @@ We are using yarn as our package manager.
 Installing is as easy as doing: `yarn`.
 And then `yarn dev` for running dev server using vite.
 
+A debug mode is available, and uses some mocked values. To access it, you need to have an entry in local storage `debug` with value `true`.
+
 ## TODO:
 - Add UI for game result risks
-- Add UI to view past tries
 - Add DB (iDB ?) to save past tries
 - Améliorer lisibilité WCAG (https://webaim.org/resources/contrastchecker/) -- Couleur de texte qui constraste mieux
+- Une page pour voir les essais précedent, histoire d'utiliser vue-router
+- Some unit tests ? I do have test-utils...
+- Some E2E tests ? I do have cypress...
 
 ---
 Heuristic / Algorithm seem easy enough:
