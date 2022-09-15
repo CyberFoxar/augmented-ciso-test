@@ -77,8 +77,6 @@ function submit() {
 
 /*
   Rules I want for my game UI:
-  Checkboxes for measures / selection
-  Dynamic check of remaining budget, coloring measure background that are not available (or disabling them)
   Once submitted, coloring Risks ?
  */
 
@@ -86,12 +84,15 @@ function submit() {
 
 <template>
 
-    Hello from game
+    <h1>Cyber-Defense Game</h1>
 
-    <p>Budget: {{currentBudget}}/{{game.budget}}K€</p>
-    <p>Selected measures: {{state.selectedMeasures.length}}/{{game.maxMeasures}}</p>
-    <button style="max-width: fit-content;" @click.prevent="submit" type="submit">Submit selected measures</button>
-    <span>Score: {{state.lastGameResult.score}}</span>
+    <div class="gameinfo">
+        <p>Budget: {{currentBudget}}/{{game.budget}}K€</p>
+        <p>Selected measures: {{state.selectedMeasures.length}}/{{game.maxMeasures}}</p>
+        <button style="max-width: fit-content;" @click.prevent="submit" type="submit">Submit selected measures</button>
+        <span>Score: {{state.lastGameResult.score}}</span>
+    </div>
+
 
     <div class="column-container">
         <div class="column">
@@ -102,8 +103,7 @@ function submit() {
                               :index="index"
                               :key="measure.identifier"
                               :currentBudget="currentBudget"
-                              v-model:model-selected-measures="state.selectedMeasures"
-                              class="entry">
+                              v-model:model-selected-measures="state.selectedMeasures">
             </MeasureComponent>
         </div>
 
@@ -114,8 +114,7 @@ function submit() {
                            :risk="risk"
                            :index="index"
                            :key="risk.identifier"
-                           :game-result="state.lastGameResult"
-                           class="entry">
+                           :game-result="state.lastGameResult">
             </RiskComponent>
         </div>
     </div>
